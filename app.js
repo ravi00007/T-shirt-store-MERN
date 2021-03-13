@@ -4,9 +4,14 @@ const mongoose = require("mongoose");
 const bodyParse =  require("body-parser");
 const cookieParse =  require("cookie-parser");
 const cors =  require("cors");
-const authRouts =  require('./routes/auth')
-// db connection
 
+
+// my routes
+const authRouts =  require('./routes/auth');
+const userRouts = require('./routes/user')
+
+
+// db connection
 mongoose.connect(process.env.MongoDBurl, {
   useCreateIndex: true,
   useUnifiedTopology: true,
@@ -40,20 +45,10 @@ const isAdmin = (req, res, next) => {
   next();
 };
 
-app.get("/admin", isAdmin, admin);
-
-app.get("/login", (req, res) => {
-  return res.send("You are visiting login route");
-});
 
 app.use("/api",authRouts);
+app.use("/api",userRouts);
 
 app.listen(port, () => {
   console.log(`Server is up and running... at ${port}`);
 });
-
-// const port = 3000
-
-// app.get('/', (req, res) => res.send('Hello World!'))
-
-// app.listen(port, () => console.log(`Example app listening on port ${port}!`))
