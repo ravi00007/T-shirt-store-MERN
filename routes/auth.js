@@ -23,7 +23,7 @@ router.post(
 router.get("/singout", singout);
 
 router.get('/test',IsSingIn,(req,res)=>{
-  res.send('this is proceted route')
+  res.json(req.auth)
 });
 
 module.exports = router;
